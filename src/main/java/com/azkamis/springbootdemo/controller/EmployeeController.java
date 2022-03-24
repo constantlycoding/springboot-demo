@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.azkamis.springbootdemo.dto.EmployeeGetDto;
+import com.azkamis.springbootdemo.mapper.MapStructMapper;
 import com.azkamis.springbootdemo.model.Employee;
 import com.azkamis.springbootdemo.service.EmployeeService;
 
@@ -20,10 +22,15 @@ import com.azkamis.springbootdemo.service.EmployeeService;
 @RequestMapping("/api")
 public class EmployeeController {
     
+	private final MapStructMapper mapstructMapper;
+	
 	private final EmployeeService empService;
     
-    public EmployeeController(EmployeeService empService){
-        this.empService = empService;
+    public EmployeeController(
+    		MapStructMapper mapstructMapper,
+    		EmployeeService empService){
+        this.mapstructMapper = mapstructMapper;
+		this.empService = empService;
     }
 
     @PostMapping("/employees")
@@ -33,8 +40,8 @@ public class EmployeeController {
     }
     
     @GetMapping("/employees")
-    public List<Employee> readEmployees() {
-        return empService.getEmployees();
+    public List<EmployeeGetDto> readEmployees() {
+        return mapstructMapper.map(empService.getEmployees());
     }
 
     @PutMapping("/employees/{empId}")
