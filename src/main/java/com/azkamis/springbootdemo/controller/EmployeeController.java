@@ -41,7 +41,7 @@ public class EmployeeController {
     
     @GetMapping("/employees")
     public List<EmployeeGetDto> readEmployees() {
-        return mapstructMapper.map(empService.getEmployees());
+        return mapstructMapper.employeeListToEmployeeGetDtoList(empService.getEmployees());
     }
 
     @PutMapping("/employees/{empId}")

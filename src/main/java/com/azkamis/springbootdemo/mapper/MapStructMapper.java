@@ -12,5 +12,5 @@ import com.azkamis.springbootdemo.model.Employee;
 )
 public interface MapStructMapper {
 	EmployeeGetDto employeeToEmployeeGetDto(Employee employee);
-	List<EmployeeGetDto> map(List<Employee> employees);
+	List<EmployeeGetDto> employeeListToEmployeeGetDtoList(List<Employee> employees);
 }
