@@ -1,5 +1,7 @@
 package com.azkamis.springbootdemo.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,11 +21,13 @@ import com.azkamis.springbootdemo.service.EmployeeService;
 @RestController
 @RequestMapping("/api")
 public class EmployeeController {
-    
+
 	private final MapStructMapper mapstructMapper;
 	
 	private final EmployeeService empService;
-    
+	
+	private final static Logger logger = LoggerFactory.getLogger(EmployeeController.class);
+	
     public EmployeeController(
     		MapStructMapper mapstructMapper,
     		EmployeeService empService){
@@ -31,14 +35,6 @@ public class EmployeeController {
 		this.empService = empService;
     }
 
-	/*
-	 * @PostMapping("/employees")
-	 * 
-	 * @ResponseStatus(HttpStatus.CREATED) public Employee
-	 * createEmployee(@RequestBody Employee emp) { return
-	 * empService.createEmployee(emp); }
-	 */
-    
     @PostMapping("/employees")
     public ResponseEntity<Object> createEmployee(@RequestBody Employee emp) {
         return new ResponseEntity<>(
@@ -69,6 +65,7 @@ public class EmployeeController {
     @DeleteMapping("/employees/{empId}")
     public ResponseEntity<Object> deleteEmployees(@PathVariable(value = "empId") Long id) {
     	empService.deleteEmployee(id);
+    	logger.info("info!");
         return new ResponseEntity<>(
                 new ApiResponse<>(HttpStatus.OK.value(),
 	                "Employee deleted successfully."),
